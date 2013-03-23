@@ -7,7 +7,7 @@
 #  Creator: Thinkhy
 #  Date: 2011.04.30   
 #  Online Doc: http://blog.csdn.net/thinkhy/article/details/6564434   
-#  Last version of source code: https://gist.github.com/949659 
+#  Last version of source code: https://github.com/di3du/DisanduAdmin/tree/master/2012/tedSubtitle
 #  ChangeLog: 1 Add language code. [thinkhy 2011.05.06]
 #             2 Read advertisement time from the parameter of introDuration in html.
 #               If the time is not correct by intorDuratoin parameter,

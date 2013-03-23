@@ -1,7 +1,7 @@
 TedSubtitle
 
 Description:
-     Get ted talk's subtitle from TED.com and convert subtitle of TED video to SRT format(SubRip Subtitle File).
+     Get ted talk's subtitle from TED.com and convert subtitle of TED video to SRT format(SubRip Subtitle File). 
 
 Usage: tedSubtitle URL languageCode output.src 
        or you can modify the testTedSub.bat directly.
@@ -12,7 +12,7 @@ Files:
     testTedSub.bat   Batch processing file.
 
 Online Doc: http://blog.csdn.net/thinkhy/article/details/6564434   
-Last version of source code: https://gist.github.com/949659 
+Last version of source code: https://github.com/di3du/DisanduAdmin/tree/master/2012/tedSubtitle 
 
 License: Apache License V2.0
 
