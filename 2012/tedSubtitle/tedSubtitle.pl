@@ -7,7 +7,7 @@
 #  Creator: Thinkhy
 #  Date: 2011.04.30   
 #  Online Doc: http://blog.csdn.net/thinkhy/article/details/6564434   
-#  Last version of source code: https://github.com/di3du/DisanduAdmin/tree/master/2012/tedSubtitle
+#  Last version of source code: https://gist.github.com/949659 
 #  ChangeLog: 1 Add language code. [thinkhy 2011.05.06]
 #             2 Read advertisement time from the parameter of introDuration in html.
 #               If the time is not correct by intorDuratoin parameter,
@@ -17,6 +17,8 @@
 #             5 Thanks to doyouwanna's bug report, fixed the problem of inaccurate advertisement duration which is due to  percent-encode in html. [thinkhy 2012.10.21]
 #             6. Ted.com changed the vedio page recently, fixed the problem that failed to get talk id.  
 #                Thanks to Xianglin  for reporting this problem. [thinkhy 3/23/2013]        
+#             7. Specify fileencoding as CP936 when language code is chi_hans
+#                Thanks to CYan  for reporting this defect. [thinkhy 12/15/2013]        
 #
 #  LanguageCode     Language  
 #  alb              Albanian
@@ -49,7 +51,7 @@
 #  lit              Lithuanian
 #  mac              Macedonian
 #  may              Malay
-#  nob              Norwegian, Bokm錶 (Bokmaal)
+#  nob              Norwegian, Bokm?l (Bokmaal)
 #  pol              Polish   
 #  por_br           Portuguese (Brazil)
 #  por_pt           Portuguese (Portugal)
@@ -108,13 +110,13 @@ my $outputFile = $ARGV[2];
 
 print "Get html content from URL: $url\n";
 
-open OUT, ">out.html";
+#open OUT, ">out.html";
 
 # First of all, Get the talkID from the web page.
 my $html = GetUrl($url);
 
 #my $html = do { local( @ARGV, $/ ) = "out.html"; <> };
-print OUT $html;
+#print OUT $html;
 
 # Fixed the problem that failed to get talk id, it's because Ted.com changed the vedio page recently.
 # Thanks to Xianglin for reporting this problem timely. [thinkhy 3/23/2013]        
@@ -170,8 +172,16 @@ my $content = GetUrl($subtitleUrl);
 #open DEBUG, ">out.json";
 #print DEBUG $content;
 
-# Decode JSON text
+# subtitles in Chinese Hans should be saved using CP936
+# Thanks CYAN for reporting this problem [thinkhy 12/15/2013]
 open SRT, ">$outputFile";
+if ($languageCode =~ /chi_hans/i) {
+    print "Set fileencoding=CP936 for chi_hans\n";
+    binmode(SRT, ":encoding(CP936)");
+}
+
+
+# Decode JSON text
 my $json = new JSON;
 my $obj = $json->decode($content);
 
@@ -265,7 +275,7 @@ sub GetContentFromFile
 sub GetUrl
 {
     my $url = shift;
-    my $content = get($url) or die "Can't get $url\n";
+    my $content = get($url) or die "Can't get $url $#\n";
 
     # Thanks to doyouwanna's bug report, 
     # fix the problem of inaccurate advertisement duration which is due to  percent-encode in html. [thinkhy 2012.10.21]
